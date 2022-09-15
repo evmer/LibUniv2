@@ -39,8 +39,8 @@ library LibUniv2 {
     function swap(
         address _tokenIn,
         uint _amountIn,
-        bytes32[] calldata _path
-    ) public returns (uint _amountOut) {
+        bytes32[] memory _path
+    ) internal returns (uint _amountOut) {
 
         address to = address(uint160(uint(_path[0] >> 96)));
         IERC20(_tokenIn).transfer(to, _amountIn);
