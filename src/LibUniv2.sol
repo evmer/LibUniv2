@@ -1,9 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./IUniswapV2Pair.sol";
+interface IERC20 {
+    function transfer(address recipient, uint256 amount) external returns (bool);
+}
 
-import "@openzeppelin/token/ERC20/ERC20.sol";
+interface IUniswapV2Pair {
+    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);
+    function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;
+}
 
 library LibUniv2 {
 
@@ -27,18 +32,18 @@ library LibUniv2 {
     }
 
     /* @dev Perform gas-efficient swaps across an arbitrary number of Uniswap v2 pairs.
-    * @param _tokenIn the initial ERC20 token to swap.
+    * @param _tokenIn the initial ERC20 token address to swap.
     * @param _amountIn the amount of {_tokenIn} to swap.
     * @param _path contains the encoded data about the fees and the route (see comments below).
     */
     function swap(
-        IERC20 _tokenIn,
+        address _tokenIn,
         uint _amountIn,
         bytes32[] calldata _path
     ) public returns (uint _amountOut) {
 
         address to = address(uint160(uint(_path[0] >> 96)));
-        _tokenIn.transfer(to, _amountIn);
+        IERC20(_tokenIn).transfer(to, _amountIn);
 
         for (uint i; i < _path.length; ++i) {
             address pair = to;
