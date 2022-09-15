@@ -72,7 +72,7 @@ contract ContractBTest is Test {
 
         ERC20Mock(tokenIn).mint(address(this), amountIn);
 
-        uint amountOut = LibUniv2.swap(IERC20(tokenIn), amountIn, paths);
+        uint amountOut = LibUniv2.swap(tokenIn, amountIn, paths);
 
         // CHECK RESULT
 
