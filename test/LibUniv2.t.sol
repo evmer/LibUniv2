@@ -3,9 +3,16 @@ pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
 
-import "../src/LibUniv2.sol";
+import {LibUniv2} from "../src/LibUniv2.sol";
 
 import "@openzeppelin/mocks/ERC20Mock.sol";
+
+interface IUniswapV2Pair {
+    function token0() external view returns (address);
+    function token1() external view returns (address);
+    function mint(address to) external returns (uint liquidity);
+    function initialize(address, address) external;
+}
 
 contract ContractBTest is Test {
 
